@@ -9,6 +9,13 @@
 */
 
 #include "embuifs.hpp"
+
+/// 2540 add
+#ifdef STREAMUTILS_ENABLE_EEPROM
+	#undef STREAMUTILS_ENABLE_EEPROM
+	#define STREAMUTILS_ENABLE_EEPROM 0
+#endif 
+
 #include "StreamUtils.h"
 #include "globals.h"
 //#include "char_const.h"
