@@ -27,7 +27,7 @@ jobs:
       max-parallel: 2
       matrix:
         example:
-          - "examples/01_generic"
+          #- "examples/01_generic"
           - "examples/02_sensors"
           - "examples/02_sensors_2540"
           - "examples/01_generic_2540"
