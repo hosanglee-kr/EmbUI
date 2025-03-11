@@ -16,10 +16,10 @@
 #include <ArduinoJson.h>
 
 #include "EmbUI.h"
-#include "interface.h"
+// #include "interface.h"
 #include "basicui.h"
 
-#include "uistrings.h"
+// #include "uistrings.h"
 
 EmbUI embui;
 
