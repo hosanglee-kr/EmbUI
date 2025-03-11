@@ -29,6 +29,8 @@ jobs:
         example:
           - "examples/01_generic"
           - "examples/02_sensors"
+          - "examples/02_sensors_2540/02_sensors_2540_v1.h"
+          - "examples/01_generic_2540/02_01_generic_2540_v1.h"
 
     steps:
     - uses: actions/checkout@v4
