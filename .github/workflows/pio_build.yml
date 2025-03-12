@@ -57,6 +57,8 @@ jobs:
       env: 
         PLATFORMIO_CI_SRC: ${{ matrix.example }}
       run: |
-        cd ${{ matrix.example }} && platformio run
-        #platformio run -c ${{ matrix.example }}/platformio.ini
-        #pio ci -c ${{ matrix.example }}/platformio.ini
+        cd ${{ matrix.example }}
+        platformio run -c platformio.ini
+        # cd ${{ matrix.example }} && platformio run
+        # platformio run -c ${{ matrix.example }}/platformio.ini
+        # pio ci -c ${{ matrix.example }}/platformio.ini
