@@ -28,6 +28,24 @@ EmbUI embui;
 #define LED_BUILTIN 2
 #endif
 
+
+static const char T_HEADLINE[] PROGMEM = "EmbUI Demo";    // имя проекта
+
+
+// Our variable names
+static const char V_LED[] PROGMEM = "vLED";
+static const char V_VAR1[] PROGMEM = "v1";
+static const char V_VAR2[] PROGMEM = "v2";
+
+// UI blocks
+static const char T_DEMO[] PROGMEM = "demo";     // генерация UI-секции "демо"
+static const char T_MORE[] PROGMEM = "more";
+
+// UI handlers
+static const char T_SET_DEMO[] PROGMEM = "do_demo";     // обработка данных из секции "демо"
+static const char T_SET_MORE[] PROGMEM = "do_more";
+
+/*
 // UI 문자열 정의
 enum UI_STRINGS {
     T_DEMO,
@@ -49,6 +67,7 @@ const char *T_DICT[][2] = {
 
 // 언어 설정 (0: 영어, 1: 한국어)
 int lang = 0;
+*/
 
 // 메뉴 블록 생성
 void block_menu(Interface *interf, JsonObjectConst data, const char *action);
@@ -85,21 +104,28 @@ void section_main_frame(Interface *interf, JsonObjectConst data, const char *act
 void block_menu(Interface *interf, JsonObjectConst data, const char *action) {
     if (!interf) return;
     interf->json_section_menu();
-    interf->option(T_DEMO, T_DICT[lang][T_DEMO]);
+    interf->option(T_DEMO, "UI Demo");
+    //interf->option(T_DEMO, T_DICT[lang][T_DEMO]);
     basicui::menuitem_settings(interf);
     interf->json_section_end();
 }
 
 // 데모 페이지 생성
 void block_demopage(Interface *interf, JsonObjectConst data, const char *action) {
-    interf->json_section_main(T_SET_DEMO, T_DICT[lang][T_SET_DEMO]);
+    interf->json_section_main(T_SET_DEMO, "Some demo controls");
+    //interf->json_section_main(T_SET_DEMO, T_DICT[lang][T_SET_DEMO]);
     interf->comment("데모 컨트롤 세트");
 
-    interf->checkbox(V_LED, embui.getConfig()[V_LED], "온보드 LED", true);
-    interf->text(V_VAR1, embui.getConfig()[V_VAR1].as<JsonVariant>(), "텍스트 필드 1");
-    interf->text(V_VAR2, "기본 값", "텍스트 필드 2");
+    interf->checkbox(V_LED, embui.getConfig()[V_LED],"Onboard LED", true);
+    interf->text(V_VAR1, embui.getConfig()[V_VAR1].as<JsonVariant>(), "text field label");   // create text field with value from the system config
+    interf->text(V_VAR2, "some default val", "another text label");         // текстовое поле со значением "по-умолчанию"
 
-    interf->button(button_t::submit, T_SET_DEMO, "전송", P_GRAY);
+    //interf->checkbox(V_LED, embui.getConfig()[V_LED], "온보드 LED", true);
+    //interf->text(V_VAR1, embui.getConfig()[V_VAR1].as<JsonVariant>(), "텍스트 필드 1");
+    //interf->text(V_VAR2, "기본 값", "텍스트 필드 2");
+
+    interf->button(button_t::submit, T_SET_DEMO, T_DICT[lang][TD::D_Send], P_GRAY); 
+    //interf->button(button_t::submit, T_SET_DEMO, "전송", P_GRAY);
     interf->json_section_end();
     interf->json_frame_flush();
 }
@@ -119,6 +145,7 @@ void action_demopage(Interface *interf, JsonObjectConst data, const char *action
     LOG(println, "데모 섹션 처리 중");
 
     embui.getConfig()[V_VAR1] = data[V_VAR1];
+   // embui.getConfig()[V_VAR1] = data[V_VAR1];
     embui.autosave();
 
     const char *text = data[V_VAR1];
